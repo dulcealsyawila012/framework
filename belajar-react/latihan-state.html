@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan State</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        class POMBensin extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    jenis: 'premium',
+                    price: 0
+                };
+            }
+
+            updateName(newName) {
+                this.setState({ jenis: newName });
+            }
+
+            updatePrice(newPrice) {
+                let price = 0;
+                if (this.state.jenis === 'premium') {
+                    price = newPrice * 10000;
+                } else if (this.state.jenis === 'pertalite') {
+                    price = newPrice * 12000;
+                } else if (this.state.jenis === 'pertamax') {
+                    price = newPrice * 15000;
+                }
+                this.setState({ price });
+            }
+
+            render() {
+                return (
+                    <div>
+                        <h1>Data POM Bensin</h1>
+                        <p>Jenis: {this.state.jenis}</p>
+                        <p>Harga: {this.state.price}</p>
+                        <select onChange={(e) => this.updateName(e.target.value)}>
+                            <option value="premium">Premium</option>
+                            <option value="pertalite">Pertalite</option>
+                            <option value="pertamax">Pertamax</option>
+                        </select>
+                        <br />
+                        <input type="number" placeholder="Masukkan harga" onChange={(e) => this.updatePrice(e.target.value)} />
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(<POMBensin />, document.getElementById('root'));
+    </script>
+</body>
+</html>
